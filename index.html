@@ -5,50 +5,53 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <!--  Подключение модуля круга  -->
+    <link rel="stylesheet" href="css/progress.css">
+    <script src="js/progress.js"></script>
     <title>OzonTest</title>
 </head>
 <body>
-    <div class="progress">
-        <div class="progress__bar" id="progress-bar">
-            <svg width="100%" height="100%" viewBox="0 0 160 160">
-                <circle
-                        class="progress__bar__bg"
-                        cx="80"
-                        cy="80"
-                        r="60"
-                        fill="none"
-                        stroke="#e6eef6"
-                        stroke-width="10"
-                />
-                <circle
-                        class="progress__bar__status"
-                        cx="80"
-                        cy="80"
-                        r="60"
-                        fill="none"
-                        stroke="#0860fc"
-                        stroke-width="10"
-                        transform="rotate(-90 80 80)"
-                />
-            </svg>
-        </div>
+    <div class="container">
+        <div id="progressCircle"></div>
 
         <div class="progress__controls">
             <div>
-                <input class="value" type="text" id="input" value="0" maxlength="3" />
-                <span class="label">Value</span>
+                <input class="progress__controls__input" type="text" id="input" value="0" maxlength="3" />
+                <span class="progress__controls__label">Value</span>
             </div>
             <div>
                 <span class="switch" id="btnAnimated"></span>
-                <span class="label">Animated</span>
+                <span class="progress__controls__label">Animated</span>
             </div>
             <div>
                 <span class="switch" id="btnHidden"></span>
-                <span class="label">Hidden</span>
+                <span class="progress__controls__label">Hidden</span>
             </div>
 
         </div>
     </div>
-<script src="js/script.js"></script>
+<script>
+    const switchAnimate = document.querySelector('#btnAnimated');
+    const switchToHide = document.querySelector('#btnHidden');
+    switchAnimate.addEventListener('click', () => {
+        switchAnimate.toggleAttribute('active');
+    })
+    switchToHide.addEventListener('click', () => {
+        switchToHide.toggleAttribute('active');
+    })
+</script>
+<script>
+    const progress = new ProgressBar(document.getElementById('progressCircle'))
+
+    document.querySelector('#input').addEventListener('input', (e) => {
+        progress.setValue(e.target.value)
+    })
+    document.querySelector('#btnAnimated').addEventListener('click', (e) => {
+        progress.setIsAnimating(e.currentTarget.hasAttribute('active'))
+    })
+    document.querySelector('#btnHidden').addEventListener('click', (e) => {
+        progress.setIsHidden(e.currentTarget.hasAttribute('active'))
+    })
+</script>
 </body>
 </html>
